@@ -1,0 +1,5 @@
+# Windows: mklink .personalGitignore .git\info\exclude
+# Linux: ln -s .git/info/exclude .personalGitignore
+.personalGitignore
+
+*.exe
