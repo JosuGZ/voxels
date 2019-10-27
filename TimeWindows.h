@@ -4,7 +4,7 @@
 #include <Windows.h>
 
 void start(void);
-//Deberían ser inline
+//DeberÃ­an ser inline
 void update(void);
 double getTotalTime(void);
 double getLastTime(void);
