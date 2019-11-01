@@ -5,9 +5,9 @@
 #include <set>
 #include <vector>
 #include <algorithm>
-#include "TimeWindows.h"
 #include <Math.h>
 
+#include "Time.h"
 #include "cube.h"
 
 using namespace std;

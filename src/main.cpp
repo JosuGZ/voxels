@@ -5,11 +5,12 @@
 #include <set>
 #include <vector>
 #include <algorithm>
-#include "TimeWindows.h"
 #include <Math.h>
 #include <stdio.h>
 
+#include "Time.h"
 #include "Game.h"
+
 Game game;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

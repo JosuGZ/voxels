@@ -1,5 +1,5 @@
 set(SOURCES
-  TimeWindows.cpp
+  Time.cpp
   cube.cpp
   Game.cpp
 )

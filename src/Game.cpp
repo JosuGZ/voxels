@@ -4,8 +4,8 @@
 #include <gl/gl.h>
 #include <gl/glu.h>
 
+#include "Time.h"
 #include "CubeSystem.hpp"
-#include "TimeWindows.h"
 
 // TODO: Refactor!
 class point {
