@@ -1,5 +1,7 @@
 set(SOURCES
   TimeWindows.cpp
+  cube.cpp
+  Game.cpp
 )
 
 add_executable(main main.cpp ${SOURCES})
