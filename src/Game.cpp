@@ -261,6 +261,7 @@ void Game::update() {
   } else {
     vY=0;
   }
+  if (py < -10000) py = 10000;
 
   // "Mouse" up and down
   if (Teclas[VK_UP]) {
