@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 project (Voxels)
 
 SET(CMAKE_BINARY_DIR build)
-SET(CMAKE_CXX_FLAGS -fpermissive) # This should go away
+SET(CMAKE_CXX_FLAGS)
 LINK_DIRECTORIES("${PROJECT_SOURCE_DIR}")
 
 add_subdirectory(src)

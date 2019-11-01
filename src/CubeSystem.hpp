@@ -823,7 +823,7 @@ public:
         //if (xT>x)
           //if (zT>z)
           temp.v[3] = pow((*i).x*tCubeBox-x,2) + pow((*i).z*tCubeBox-z,2) + pow((*i).y*tCubeBox-y,2);
-          temp.i = &(*i);
+          temp.i = const_cast<cubeBox *>(&(*i));
           list.push_back(temp);
           //const_cast<cubeBox&>(*i).drawGeometry();
         /*else
