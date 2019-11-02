@@ -1,0 +1,81 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Show compiler version",
+      "group": "build",
+      "command": "gcc",
+      "type": "shell",
+      "args": [
+        "-v"
+      ],
+      "options": {
+        "cwd": "${workspaceRoot}/build"
+      },
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Run cmake",
+      "group": "build",
+      "command": "cmake",
+      "type": "shell",
+      "args": [
+        "..",
+        "-G",
+        "MinGW Makefiles",
+      ],
+      "options": {
+        "cwd": "${workspaceRoot}/build"
+      },
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Build",
+      "group": "build",
+      "command": "mingw32-make",
+      "type": "shell",
+      "args": [
+        //"-j8"
+      ],
+      "options": {
+        "cwd": "${workspaceRoot}/build"
+      },
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": {
+        "owner": "cpp",
+        "fileLocation": "absolute",
+        "pattern": {
+          "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error|fatal\\ error):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5
+        }
+      }
+    },
+    {
+      "label": "Clean",
+      "group": "build",
+      "command": "mingw32-make",
+      "type": "shell",
+      "args": [
+        "clean"
+      ],
+      "options": {
+        "cwd": "${workspaceRoot}/build"
+      },
+      "presentation": {
+        "reveal": "always"
+      }
+    }
+  ]
+}

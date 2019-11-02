@@ -2,5 +2,7 @@
 # Linux: ln -s .git/info/exclude .personalGitignore
 .personalGitignore
 
+.vscode/
+
 build/
 *.exe
