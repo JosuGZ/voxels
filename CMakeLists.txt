@@ -3,6 +3,7 @@ project (Voxels)
 
 SET(CMAKE_BINARY_DIR build)
 SET(CMAKE_CXX_FLAGS)
+add_compile_options(-std=c++17)
 LINK_DIRECTORIES("${PROJECT_SOURCE_DIR}")
 
 add_subdirectory(src)

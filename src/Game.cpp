@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include <gl/gl.h>
 #include <gl/glu.h>
