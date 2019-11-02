@@ -158,7 +158,7 @@ void Game::init() {
         cout << "=";
       for (; q<50; q++)
         cout << " ";
-      cout << "]" << p << "\%" << endl;
+      cout << "]" << p << "%%" << endl;
       tG = getLastTime()/1000;
     }
   }
@@ -193,7 +193,7 @@ void Game::init() {
 }
 
 void Game::selectNextCube() {
-  mTypeCubeSelected = ++mTypeCubeSelected % 6;
+  mTypeCubeSelected = (mTypeCubeSelected + 1) % 6;
 }
 
 void Game::update() {
@@ -294,7 +294,7 @@ void Game::update() {
   //vx-=9.8*getLastTime();
   px+=vx;
 
-  static float h, hp, x, y, a1, a2;
+  static float h, hp, x, y, a1, a2; // TODD: Review this (a1, a2)
   h=sin(angleY);
   hp=cos(angleY);
 
@@ -384,9 +384,8 @@ void Game::update() {
         }
       }
       sort(pointsToCheck.begin(), pointsToCheck.end());
-      vector<point>::iterator i=pointsToCheck.begin();
       bool b=false;
-      for (i; i!=pointsToCheck.end() && !b; i++) {
+      for (auto i = pointsToCheck.begin(); i!=pointsToCheck.end() && !b; i++) {
         const cube *c1=NULL;
         const cube *c2=NULL;
         switch (i->axis) {
@@ -517,7 +516,7 @@ void Game::render() {
   glEnd();*/
 
   //drawCube();
-  char title[100];
+  //char title[100];
   //sprintf(title, "%f ,%f ,%f, FPS: %f, angleX: %f", px, py, pz, 1/getLastTime(), angleX); // TODO: Change title
   //SetWindowText(hWnd, title);
   mCubeSystem->drawAllCubes(px, py, pz, angleX, angleY);

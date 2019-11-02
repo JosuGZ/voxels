@@ -87,8 +87,8 @@ void EnableOpenGL (HWND hWnd, HDC *hDC, HGLRC *hRC) {
 using namespace std;
 
 int WINAPI WinMain(
-  HINSTANCE hInstance, HINSTANCE hPrevInstance,
-  LPSTR lpCmdLine, int iCmdShow
+  HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/,
+  LPSTR lpCmdLine, int /*iCmdShow*/
 ) {
   WNDCLASS wc;
   HWND hWnd;
@@ -141,11 +141,8 @@ int WINAPI WinMain(
   return 0;
 }
 
-LRESULT CALLBACK WndProc (HWND hWnd, UINT message,
-              WPARAM wParam, LPARAM lParam)
-{
-  switch (message)
-  {
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam){
+  switch (message) {
     case WM_CREATE:
       return 0;
     case WM_CLOSE:
@@ -171,4 +168,5 @@ LRESULT CALLBACK WndProc (HWND hWnd, UINT message,
     default:
       return DefWindowProc(hWnd, message, wParam, lParam);
   }
+  return 0;
 }

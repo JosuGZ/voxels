@@ -121,14 +121,14 @@ void drawCube() {
     1,0,0
   };
 
-  unsigned short boxIndex[24] = {
+  /*unsigned short boxIndex[24] = {
     0,1,2,3,
     4,5,6,7,
     0,1,5,4,
     2,3,7,6,
     0,3,7,4,
     1,2,6,5
-  };
+  };*/
 
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
@@ -232,14 +232,14 @@ void drawFace(int face) {
     1,0,0
   };
 
-  unsigned short boxIndex[24] = {
+  /*unsigned short boxIndex[24] = {
     0,1,2,3,
     4,5,6,7,
     0,1,5,4,
     2,3,7,6,
     0,3,7,4,
     1,2,6,5
-  };
+  };*/
 
   glDisable(GL_LIGHTING);
   glDisable(GL_DEPTH_TEST);
