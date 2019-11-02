@@ -351,6 +351,7 @@ void Game::update() {
   }
 
       //Código para encontrar el cubo seleccionado
+      mSelectedFace = -1;
       vector<point> pointsToCheck;
       for (auto &p: pointsToCheck) {
         p.setCrap(px, py, pz); // TODO: This is ugly
@@ -532,7 +533,9 @@ void Game::render() {
       glEnable(GL_DEPTH_TEST);
       glEnable(GL_LIGHTING);
 
-  mSelectedCube.selFace(mSelectedFace);
+  if (mSelectedFace >= 0) {
+    mSelectedCube.selFace(mSelectedFace);
+  }
 
   cruceta();
   glPopMatrix();
