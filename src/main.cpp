@@ -114,6 +114,9 @@ int WINAPI WinMain(
     10, 10, 1000, 550, NULL, NULL, hInstance, NULL
   );
 
+  //SetCapture(hWnd);
+  ShowCursor(FALSE);
+
   EnableOpenGL(hWnd, &hDC, &hRC);
   game.init();
 
@@ -143,6 +146,61 @@ int WINAPI WinMain(
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam){
   switch (message) {
+    case WM_MOUSEACTIVATE:
+      cout << "WM_MOUSEACTIVATE\n";
+      return 0;
+    //case WM_MOUSEMOVE:
+    case WM_MOUSEFIRST: {
+      // TODO: Review with API
+      //cout << "WM_MOUSEFIRST | WM_MOUSEMOVE\n";
+      double mouseX = (lParam & 0x0000FFFF) - 500;
+      double mouseY = ((lParam >> 16) & 0x0000FFFF) - 275;
+      tagPOINT center;
+      center.x = 500;
+      center.y = 275;
+      game.moveCursor(mouseX / 10, mouseY / 10);
+      ClientToScreen(hWnd, &center);
+      SetCursorPos(center.x,center.y);
+    } return 0;
+    case WM_MOUSEHOVER:
+      cout << "WM_MOUSEHOVER\n";
+      return 0;
+    case WM_MOUSELAST:
+      cout << "WM_MOUSELAST\n";
+      return 0;
+    case WM_MOUSELEAVE:
+      cout << "WM_MOUSELEAVE\n";
+      return 0;
+    case WM_MOUSEWHEEL: {
+      cout << "WM_MOUSEWHEEL\n";
+      auto delta = GET_WHEEL_DELTA_WPARAM(wParam);
+      if (delta <= 0) {
+        game.selectPreviousCube();
+      } else {
+        game.selectNextCube();
+      }
+      cout << "  " << (delta >= 0 ? "Up" : "Down") << "\n";
+    } return 0;
+    // TODO: Change this
+    case WM_LBUTTONDOWN:
+      game.Teclas[VK_RETURN] = true;
+      return 0;
+    case WM_LBUTTONUP:
+      game.Teclas[VK_RETURN] = false;
+      return 0;
+    case WM_MBUTTONDOWN:
+      cout << "WM_MBUTTONDOWN\n";
+      return 0;
+    case WM_MBUTTONUP:
+      cout << "WM_MBUTTONUP\n";
+      return 0;
+    // TODO: Change this
+    case WM_RBUTTONDOWN:
+      game.Teclas[0x45] = true;
+      return 0;
+    case WM_RBUTTONUP:
+      game.Teclas[0x45] = false;
+      return 0;
     case WM_CREATE:
       return 0;
     case WM_CLOSE:

@@ -192,6 +192,16 @@ void Game::init() {
         mCubeSystem->addCube(i,camb,j);
 }
 
+void Game::moveCursor(double x, double y) {
+  angleY=fmod((angleY+y*getLastTime()),2*M_PI);
+  angleX+=x*getLastTime();
+}
+
+void Game::selectPreviousCube() {
+  --mTypeCubeSelected;
+  if (mTypeCubeSelected < 0) mTypeCubeSelected = 5;
+}
+
 void Game::selectNextCube() {
   mTypeCubeSelected = (mTypeCubeSelected + 1) % 6;
 }
@@ -264,15 +274,23 @@ void Game::update() {
   }
   if (py < -10000) py = 10000;
 
-  // "Mouse" up and down
+  // Move cursor
+  // TODO: Don't use keys and curor
+  double mouseX = 0, mouseY = 0;
   if (Teclas[VK_UP]) {
-    angleY=fmod((angleY-2*getLastTime()),2*M_PI);
-    //py+=10*getLastTime();
+    mouseY -= 2;
   }
   if (Teclas[VK_DOWN]) {
-    angleY=fmod((angleY+2*getLastTime()),2*M_PI);
-    //py-=10*getLastTime();
+    mouseY += 2;
   }
+  if (Teclas[VK_LEFT]) {
+    mouseX -= 2;
+  }
+  if (Teclas[VK_RIGHT]) {
+    mouseX += 2;
+  }
+  moveCursor(mouseX, mouseY);
+
   // Jump code
   static bool spacePressed;
   if (Teclas[VK_SPACE] && !spacePressed && !vY) {
@@ -281,15 +299,6 @@ void Game::update() {
   }
   else if (!Teclas[VK_SPACE])
     spacePressed=false;
-  // "Mouse" left and right
-  if (Teclas[VK_LEFT]) {
-    angleX-=2*getLastTime();
-  }
-  if (Teclas[VK_RIGHT]) {
-    angleX+=2*getLastTime();
-  }
-
-  // Add/remove cubes here
 
   //vx-=9.8*getLastTime();
   px+=vx;

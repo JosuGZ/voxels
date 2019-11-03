@@ -19,6 +19,8 @@ float vY=0; // TODO: ????
 
   Game();
   void init();
+  void moveCursor(double x, double y);
+  void selectPreviousCube();
   void selectNextCube();
   void update();
   void render();
