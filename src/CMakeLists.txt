@@ -1,4 +1,5 @@
 set(SOURCES
+  graphics/graphic_functions.cpp
   Time.cpp
   cube.cpp
   Game.cpp
