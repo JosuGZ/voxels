@@ -5,6 +5,9 @@
 #include <gl/gl.h>
 #include <gl/glu.h>
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
 #include "graphics/graphic_functions.h"
 #include "Time.h"
 #include "CubeSystem.hpp"
@@ -30,18 +33,18 @@ public:
 
 //Texturas
 GLuint cesped;
-#include "corona.h"
 void cargaTexturas(void) {
-  corona::Image* imagen=NULL;
+  int width, height, bpp;
+  uint8_t* rgb_image = stbi_load("tMinecraft.bmp", &width, &height, &bpp, 3);
 
-  imagen = corona::OpenImage("tMinecraft.bmp", corona::PF_R8G8B8);
+  stbi_image_free(rgb_image);
   glGenTextures(1, &cesped);
   glBindTexture(GL_TEXTURE_2D, cesped);
 
   gluBuild2DMipmaps(
-    GL_TEXTURE_2D, 4, imagen->getWidth(),
-    imagen->getHeight() , GL_RGB,
-    GL_UNSIGNED_BYTE, imagen->getPixels()
+    GL_TEXTURE_2D, 4, width,
+    height, GL_RGB,
+    GL_UNSIGNED_BYTE, rgb_image
   );
 
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);

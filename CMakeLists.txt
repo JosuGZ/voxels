@@ -8,5 +8,4 @@ LINK_DIRECTORIES("${PROJECT_SOURCE_DIR}")
 
 add_subdirectory(src)
 
-configure_file(corona.dll dist/corona.dll COPYONLY)
 configure_file(tMinecraft.bmp dist/tMinecraft.bmp COPYONLY)
