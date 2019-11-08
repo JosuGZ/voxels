@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <Math.h>
 
+#include "engine/Engine.h"
 #include "graphics/graphic_functions.h"
 #include "Time.h"
 #include "cube.h"
@@ -527,6 +528,7 @@ class cubeSystem{
   set<cubeBox> cubeBoxData;
   unsigned cubeCount;
   cubeSystem(){
+    Engine::instance();
     //cubeCount=0;
   }
 public:

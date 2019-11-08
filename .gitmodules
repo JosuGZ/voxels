@@ -1,3 +1,6 @@
 [submodule "submodules/stb"]
 	path = submodules/stb
 	url = git@github.com:JosuGZ/stb.git
+[submodule "submodules/mingw-std-threads"]
+	path = submodules/mingw-std-threads
+	url = git@github.com:meganz/mingw-std-threads.git
