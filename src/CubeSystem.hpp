@@ -10,6 +10,7 @@
 #include "engine/Engine.h"
 #include "graphics/graphic_functions.h"
 #include "Time.h"
+#include "CubeBox.h"
 #include "cube.h"
 
 using namespace std;
@@ -311,205 +312,40 @@ float sand5[48] = {
   3./16, 2./16
 };
 
-class cubeBox{
-  set<cube> cubes;
-  vector<float> cVertex;
-  vector<float> cNormal;
-  vector<float> cTexture;
-  vector<float> cVertexUp;
-  vector<float> cNormalUp;
-  vector<float> cTextureUp;
-  bool changed;
-public:
-  int x, y, z;
-  void buildGeometry();
-  void buildGeometryUp(){
-    cVertexUp.clear();
-    cNormalUp.clear();
-    cTextureUp.clear();
-    for (set<cube>::iterator i=cubes.begin(); i!=cubes.end(); i++){
-      for (int j=0; j<4; j++){
-        cVertexUp.push_back(vertex[12+j*3+0]+1*(*i).x);
-        cVertexUp.push_back(vertex[12+j*3+1]+1*(*i).y);
-        cVertexUp.push_back(vertex[12+j*3+2]+1*(*i).z);
-        cNormalUp.push_back(normal[12+j*3+0]);
-        cNormalUp.push_back(normal[12+j*3+1]);
-        cNormalUp.push_back(normal[12+j*3+2]);
-        cTextureUp.push_back(texture[8+j*2+0]);
-        cTextureUp.push_back(texture[8+j*2+1]);
-      }
-    }
-  }
-
-  bool operator==(const cubeBox& c) const {
-    return x==c.x&&y==c.y&&z==c.z;
-  }
-  /*cubeBox operator=(const cubeBox& c){
-    x=c.x;
-    y=c.y;
-    z=c.z;
-    return *this;
-  }*/
-  bool operator<(const cubeBox& c) const {
-    //return x<c.x ? true : x>c.x ? false : y<c.y ? true : y>c.y ? false : z<c.z ? true : false;
-    return x == c.x ? (y == c.y ? (z < c.z) : (y < c.y)) : (x < c.x);
-    cout << "Comparando cubeBox" << " : " << this << " < " << &c << " : ";
-    if (x<c.x){
-      cout << "True" << endl;
-      return true;
-    }
-    else
-    {
-      if (y<c.y){
-        cout << "True" << endl;
-        return true;
-      }
-      else{
-        cout << (z<c.z ? "True":"False") << endl;
-        return z<c.z ? true : false;
-      }
-    }
-  }
-  cubeBox(const cubeBox& c): x(c.x), y(c.y), z(c.z) {
+void cubeBox::drawGeometry(){
+  //cout << "Reconstruyendo geometr�a de cubeBox (" << x << ", " << y << ", " << z << ")" << " : " << this << endl;
+  if (changed){
     changed=false;
-    for(set<cube>::iterator i = c.cubes.begin(); i!=c.cubes.end(); i++)
-      cubes.insert(*i);
-    for(vector<float>::const_iterator j=c.cVertex.begin(); j!=c.cVertex.end(); j++)
-      cVertex.push_back(*j);
-    for(vector<float>::const_iterator k=c.cNormal.begin(); k!=c.cNormal.end(); k++)
-      cNormal.push_back(*k);
-    //cout << "Copiando cubeBox (" << x << ", " << y << ", " << z << ")" << " : " << &c << " -> " << this << endl;
+    buildGeometry();
   }
-  cubeBox(int x, int y, int z): x(x), y(y), z(z) {
-    changed=false;
-    //cout << "Creando cubeBox (" << x << ", " << y << ", " << z << ")" << " : " << this << endl;
-  }
-  ~cubeBox(){
-    //cout << "Eliminando cubeBox (" << x << ", " << y << ", " << z << ")" << " : " << this << endl;
-  }
-  void addCube(int x, int y, int z, int type=0){
-    //cout << "Inicio inserci�n cubo" << endl;
-    cube temp(x,y,z,type);
-    if (cubes.find(temp)==cubes.end()){
-      cubes.insert(temp);
-      changed=true;
-    }
-    //buildGeometry();
-    //cout << "Fin inserci�n cubo" << endl;
-  }
-  void removeCube(int x, int y, int z){
-    //cout << "Inicio inserci�n cubo" << endl;
-    cube temp(x,y,z);
-    if (cubes.find(temp)!=cubes.end()){
-      cubes.erase(temp);
-      changed=true;
-    }
-    //buildGeometry();
-    //cout << "Fin inserci�n cubo" << endl;
-  }
-  void drawAllCubes() const {
-    //cout << "Dibujando cubeBox (" << x << ", " << y << ", " << z << ")" << " : " << this << endl;
-    for (set<cube>::iterator i=cubes.begin(); i!=cubes.end(); i++)
-    {
-      /*cube  p = (*i);
-      p.draw();*/
-      i->draw();
-    }
-  }
-  void drawGeometry(){
-    //cout << "Reconstruyendo geometr�a de cubeBox (" << x << ", " << y << ", " << z << ")" << " : " << this << endl;
-    if (changed){
-      changed=false;
-      buildGeometry();
-    }
-    //glDisable(GL_LIGHTING);
-    //glDisable(GL_DEPTH_TEST);
-    //glColor4f(rand()%10*0.1,rand()%10*0.1,rand()%10*0.1,0.2);
-    glColor4f(1,0,0,0.2);
+  //glDisable(GL_LIGHTING);
+  //glDisable(GL_DEPTH_TEST);
+  //glColor4f(rand()%10*0.1,rand()%10*0.1,rand()%10*0.1,0.2);
+  glColor4f(1,0,0,0.2);
 
-    //glDisable(GL_LIGHTING);
-    //glDisable(GL_DEPTH_TEST);
-    //glDisable(GL_TEXTURE_2D);
+  //glDisable(GL_LIGHTING);
+  //glDisable(GL_DEPTH_TEST);
+  //glDisable(GL_TEXTURE_2D);
 
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-    glVertexPointer(3, GL_FLOAT, 0, &(*cVertex.begin()));
-    glNormalPointer(GL_FLOAT, 0, &(*cNormal.begin()));
-    glTexCoordPointer(2, GL_FLOAT, 0, &(*cTexture.begin()));
+  glVertexPointer(3, GL_FLOAT, 0, &(*cVertex.begin()));
+  glNormalPointer(GL_FLOAT, 0, &(*cNormal.begin()));
+  glTexCoordPointer(2, GL_FLOAT, 0, &(*cTexture.begin()));
 
-    glDrawArrays(GL_QUADS, 0, cVertex.size()/3);
-    //glDrawElements(GL_QUADS, 24, GL_UNSIGNED_SHORT, boxIndex);
+  glDrawArrays(GL_QUADS, 0, cVertex.size()/3);
+  //glDrawElements(GL_QUADS, 24, GL_UNSIGNED_SHORT, boxIndex);
 
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-    //glEnable(GL_LIGHTING);
-    //glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_TEXTURE_2D);
-  }
-  void drawGeometryUp(){
-    //cout << "Reconstruyendo geometr�a de cubeBox (" << x << ", " << y << ", " << z << ")" << " : " << this << endl;
-    if (changed){
-      changed=false;
-      buildGeometryUp();
-    }
-    //glDisable(GL_LIGHTING);
-    //glDisable(GL_DEPTH_TEST);
-    //glColor4f(rand()%10*0.1,rand()%10*0.1,rand()%10*0.1,0.2);
-    glColor4f(1,0,0,0.2);
-
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    glVertexPointer(3, GL_FLOAT, 0, &(*cVertexUp.begin()));
-    glNormalPointer(GL_FLOAT, 0, &(*cNormalUp.begin()));
-    glTexCoordPointer(2, GL_FLOAT, 0, &(*cTextureUp.begin()));
-
-    glDrawArrays(GL_QUADS, 0, cVertexUp.size()/3);
-    //glDrawElements(GL_QUADS, 24, GL_UNSIGNED_SHORT, boxIndex);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-  }
-  bool collision(float x, float y, float z) const {
-    cube temp((int)x,(int)y,(int)z);
-    set<cube>::iterator i = cubes.find(temp);
-    if(i!=cubes.end()){
-      //cout << (int)x << (int)y << (int)z;
-      return true;
-    }
-    else
-      return false;
-  }
-  bool collision(float left, float right, float down, float up, float _far, float _near) const {
-
-    set<cube>::iterator i;
-
-    for (i=cubes.begin(); i!=cubes.end(); i++)
-    {
-      if ( !((*i).x > right || (*i).x+1 < left) )
-        if( !((*i).y > up || (*i).y+1 < down) )
-          if ( !((*i).z > _near || (*i).z+1 < _far) )
-            return true;
-    }
-
-    return false;
-
-  }
-  const cube* find(int x, int y, int z) const {
-    cube temp(x,y,z);
-    set<cube>::iterator i = cubes.find(temp);
-    if(i!=cubes.end())
-      return &(*i);
-    else
-      return NULL;
-  }
-};
+  //glEnable(GL_LIGHTING);
+  //glEnable(GL_DEPTH_TEST);
+  //glEnable(GL_TEXTURE_2D);
+}
 
 const int tCubeBox = 20;
 

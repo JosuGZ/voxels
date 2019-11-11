@@ -2,6 +2,7 @@ set(SOURCES
   engine/Engine.cpp
   graphics/graphic_functions.cpp
   Time.cpp
+  CubeBox.cpp
   cube.cpp
   Game.cpp
 )
