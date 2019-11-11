@@ -11,9 +11,6 @@ class cubeBox {
   std::vector<float> cVertex;
   std::vector<float> cNormal;
   std::vector<float> cTexture;
-  std::vector<float> cVertexUp;
-  std::vector<float> cNormalUp;
-  std::vector<float> cTextureUp;
   bool changed;
 public:
   int x, y, z;
