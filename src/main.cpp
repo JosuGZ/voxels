@@ -46,7 +46,7 @@ void EnableOpenGL (HWND hWnd, HDC *hDC, HGLRC *hRC) {
   //Activar iluminaciÃ³n general
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
-  GLfloat position[] = { 40, 40, -30, 1.0 };
+  GLfloat position[] = { 400, 400, -300, 1.0 };
   glLightfv(GL_LIGHT0, GL_POSITION, position);
   GLfloat ambiente[] = { 1, 1, 1, 1.0 };
   glLightfv(GL_LIGHT0, GL_AMBIENT, ambiente);

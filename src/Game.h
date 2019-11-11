@@ -10,7 +10,7 @@ public:
   bool Teclas[256]; // TODO: Make private
 
 //float px=0,py=0,pz=0, angle=0;
-float px=1, py=10, pz=1; // TODO: Player position?
+float px=1, py=100, pz=1; // TODO: Player position?
 float vx=0, vy=0, vz=0;  // TODO: View position?
 float angleX=0;//3.14/2;
 float angleY=0;

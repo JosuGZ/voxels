@@ -62,64 +62,18 @@ Game::Game() {}
 void Game::init() {
   mCubeSystem = cubeSystem::initCubeSystem();
 
-  //CS->addCube(0,0,0);
-  //CS->addCube(-1,0,0);
-  //CS->addCube(px,0,py);
-  //CS->addCube(-1,0,1);
-  //CS->addCube(0,0,1);
-  //CS->addCube(0,1,0);
-  //CS->addCube(-10,1,0);
-  #define RANDOM_CUBES 0000000
   start();
-  int i;
-  for(i=0; i<RANDOM_CUBES; i++) {
-    mCubeSystem->addCube(rand()%4000-2000,rand()%4000-2000,rand()%4000-2000,rand()%6);
-    if(i%1000==0) {
-      update();
-      static double tG;
-      system("cls");
-      cout << "Tiempo de generación de cubo: " << tG << endl;
-      cout << "Quedan " << (RANDOM_CUBES-i)*tG << " segundos" << endl;
-      cout << "Completados " << i << " de " << RANDOM_CUBES << " cubos" << endl;
-      static int p, q;
-      p=(float)100/(float)RANDOM_CUBES*i;
-      cout << "[";
-      for (q=0; q<p/2; q++)
-        cout << "=";
-      for (; q<50; q++)
-        cout << " ";
-      cout << "]" << p << "%%" << endl;
-      tG = getLastTime()/1000;
+  cargaTexturas();
+  for (int x = -100; x <= 100; ++x) {
+    for (int z = -100; z <= 100; ++z) {
+      int height = 60 + 5 * sin((double)x/100) + 5 * cos((double)z/100);
+      height += 5 * sin((double)x/20) + 5 * cos((double)z/20);
+      height +=  + 5 * sin((double)x/10) + 5 * cos((double)z/10);
+      for (int y = 0; y <= height; ++y) {
+        mCubeSystem->addCube(x,y,z);
+      }
     }
   }
-  mCubeSystem->addCube(0,1,0);
-  mCubeSystem->addCube(1,1,0);
-  mCubeSystem->addCube(2,1,0);
-  mCubeSystem->addCube(3,1,0);
-  mCubeSystem->addCube(4,1,0);
-  mCubeSystem->addCube(5,1,0);
-  mCubeSystem->addCube(1,2,0);
-  mCubeSystem->addCube(2,2,0);
-  mCubeSystem->addCube(3,2,0);
-  mCubeSystem->addCube(4,2,0);
-  mCubeSystem->addCube(5,2,0);
-  mCubeSystem->addCube(2,3,0);
-  mCubeSystem->addCube(3,3,0);
-  mCubeSystem->addCube(4,3,0);
-  mCubeSystem->addCube(5,3,0);
-  mCubeSystem->addCube(3,4,0);
-  mCubeSystem->addCube(4,4,0);
-  mCubeSystem->addCube(5,4,0);
-  mCubeSystem->addCube(4,5,0);
-  mCubeSystem->addCube(5,5,0);
-  mCubeSystem->addCube(5,6,0);
-  mCubeSystem->addCube(5,1,5);
-  mCubeSystem->addCube(2,1,0);
-  cargaTexturas();
-  for (int camb=-100; camb<=0; camb++)
-    for (i=-100; i<100; i++)
-      for (int j=-100; j<100; j++)
-        mCubeSystem->addCube(i,camb,j);
 }
 
 void Game::moveCursor(double x, double y) {
