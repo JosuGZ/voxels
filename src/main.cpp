@@ -1,6 +1,6 @@
 #include <windows.h>
-#include <gl/gl.h>
-#include <gl/glu.h>
+#include <GL/glew.h>
+#include <GL/glu.h>
 #include <iostream>
 #include <set>
 #include <vector>
@@ -16,6 +16,8 @@ Game game;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 void EnableOpenGL (HWND hWnd, HDC *hDC, HGLRC *hRC) {
+  glewInit();
+
   PIXELFORMATDESCRIPTOR pfd;
   int iFormat;
 

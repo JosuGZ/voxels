@@ -1,6 +1,6 @@
 #include "graphic_functions.h"
 
-#include <gl/gl.h>
+#include <gl/glew.h>
 #include <gl/glu.h>
 
 void ejes() {

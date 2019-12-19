@@ -3,6 +3,7 @@
     {
       "name": "Win32",
       "includePath": [
+        "${workspaceRoot}/lib/glew-2.1.0/include",
         "${workspaceRoot}/submodules/stb/",
         "${workspaceRoot}/submodules/mingw-std-threads/"
       ],
