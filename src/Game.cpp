@@ -8,6 +8,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+#include "utils.h"
+#include "graphics/gl_utils.h"
 #include "graphics/graphic_functions.h"
 #include "Time.h"
 #include "CubeSystem.hpp"
@@ -50,7 +52,9 @@ void cargaTexturas(void) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
+  glCheckError(UTILS_DEBUG_LINE); // No errors
   glTexEnvf(GL_TEXTURE_2D, GL_TEXTURE_ENV_MODE, GL_DECAL);
+  glCheckError(UTILS_DEBUG_LINE, false); // Expose INVALID_ENUM error
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 
