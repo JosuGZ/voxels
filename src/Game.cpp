@@ -2,7 +2,7 @@
 
 #define _USE_MATH_DEFINES
 #include <cmath>
-#include <gl/gl.h>
+#include <gl/glew.h>
 #include <gl/glu.h>
 
 #define STB_IMAGE_IMPLEMENTATION
