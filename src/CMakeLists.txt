@@ -1,5 +1,6 @@
 set(SOURCES
   engine/Engine.cpp
+  graphics/gl_utils.cpp
   graphics/graphic_functions.cpp
   Time.cpp
   CubeBox.cpp
