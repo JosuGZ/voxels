@@ -8,6 +8,7 @@
 #include <Math.h>
 #include <stdio.h>
 
+#include "graphics/gl_utils.h"
 #include "Time.h"
 #include "Game.h"
 
@@ -16,8 +17,6 @@ Game game;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 void EnableOpenGL (HWND hWnd, HDC *hDC, HGLRC *hRC) {
-  glewInit();
-
   PIXELFORMATDESCRIPTOR pfd;
   int iFormat;
 
@@ -38,6 +37,11 @@ void EnableOpenGL (HWND hWnd, HDC *hDC, HGLRC *hRC) {
 
   *hRC = wglCreateContext( *hDC );
   wglMakeCurrent( *hDC, *hRC );
+
+	if (glewInit()) {
+    std::cout << "glewInit() failed. Aborting...";
+    abort();
+  }
 
   glClearColor(0.3,0.3,1,1);
 
@@ -84,6 +88,7 @@ void EnableOpenGL (HWND hWnd, HDC *hDC, HGLRC *hRC) {
   glCullFace(GL_BACK);
 
   glEnable(GL_TEXTURE_2D);
+  glCheckError("EnableOpenGL");
 }
 
 using namespace std;
