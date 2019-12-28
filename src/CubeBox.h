@@ -1,6 +1,8 @@
 #ifndef CUBEBOX_H
 #define CUBEBOX_H
 
+#include <GL/glew.h>
+#include <GL/glu.h>
 #include <set>
 #include <vector>
 
@@ -8,6 +10,7 @@
 
 class cubeBox {
   std::set<cube> cubes;
+  GLuint buffers[3];
   std::vector<float> cVertex;
   std::vector<float> cNormal;
   std::vector<float> cTexture;
@@ -15,6 +18,7 @@ class cubeBox {
 public:
   int x, y, z;
 
+  void copyData();
   void buildGeometry();
 
   bool operator==(const cubeBox& c) const;

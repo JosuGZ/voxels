@@ -1,14 +1,17 @@
 #include "CubeBox.h"
 
 #include <iostream>
+#include "graphics/gl_utils.h"
 
 using namespace std;
 
 cubeBox::cubeBox(int x, int y, int z): x(x), y(y), z(z) {
+  glGenBuffers(3, buffers);
   changed = false;
 }
 
 cubeBox::cubeBox(const cubeBox& c): x(c.x), y(c.y), z(c.z) {
+  glGenBuffers(3, buffers);
   changed=false;
   for(set<cube>::iterator i = c.cubes.begin(); i!=c.cubes.end(); i++)
     cubes.insert(*i);
@@ -18,7 +21,9 @@ cubeBox::cubeBox(const cubeBox& c): x(c.x), y(c.y), z(c.z) {
     cNormal.push_back(*k);
 }
 
-cubeBox::~cubeBox() {}
+cubeBox::~cubeBox() {
+  glDeleteBuffers(3, buffers); // TODO: Move them
+}
 
 void cubeBox::addCube(int x, int y, int z, int type) {
   cube temp(x,y,z,type);

@@ -8,6 +8,7 @@
 #include <Math.h>
 
 #include "engine/Engine.h"
+#include "graphics/gl_utils.h"
 #include "graphics/graphic_functions.h"
 #include "Time.h"
 #include "CubeBox.h"
@@ -331,9 +332,13 @@ void cubeBox::drawGeometry(){
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-  glVertexPointer(3, GL_FLOAT, 0, &(*cVertex.begin()));
-  glNormalPointer(GL_FLOAT, 0, &(*cNormal.begin()));
-  glTexCoordPointer(2, GL_FLOAT, 0, &(*cTexture.begin()));
+  glBindBuffer(GL_ARRAY_BUFFER , buffers[0]);
+  glVertexPointer(3, GL_FLOAT, 0, nullptr);
+  glBindBuffer(GL_ARRAY_BUFFER , buffers[1]);
+  glNormalPointer(GL_FLOAT, 0, nullptr);
+  glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
+  glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   glDrawArrays(GL_QUADS, 0, cVertex.size()/3);
   //glDrawElements(GL_QUADS, 24, GL_UNSIGNED_SHORT, boxIndex);
@@ -514,6 +519,21 @@ public:
 };
 bool cubeSystem::init=false;
 cubeSystem* cubeSystem::CS=NULL;
+
+void cubeBox::copyData() {
+  glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+  glBufferData(GL_ARRAY_BUFFER, cVertex.size() * sizeof(float), 0, GL_DYNAMIC_DRAW);
+  glBufferSubData(GL_ARRAY_BUFFER, 0, cVertex.size() * sizeof(float), &cVertex[0]);
+  glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+  glBufferData(GL_ARRAY_BUFFER, cNormal.size() * sizeof(float), 0, GL_DYNAMIC_DRAW);
+  glBufferSubData(GL_ARRAY_BUFFER, 0, cNormal.size() * sizeof(float), &cNormal[0]);
+  glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
+  glBufferData(GL_ARRAY_BUFFER, cTexture.size() * sizeof(float), 0, GL_DYNAMIC_DRAW);
+  glBufferSubData(GL_ARRAY_BUFFER, 0, cTexture.size() * sizeof(float), &cTexture[0]);
+
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glCheckError(UTILS_DEBUG_LINE); // This is to eventually catch errors
+}
 
 void cubeBox::buildGeometry(){
   cubeSystem* CS=cubeSystem::getCubeSystem();
@@ -782,4 +802,6 @@ void cubeBox::buildGeometry(){
         }
     }
   }
+
+  copyData();
 }
